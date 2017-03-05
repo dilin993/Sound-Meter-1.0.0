@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OxyPlot;
+using OxyPlot.Series;
+using OxyPlot.Axes;
 
 namespace Sound_Meter_1._0._0
 {
@@ -18,6 +21,7 @@ namespace Sound_Meter_1._0._0
         private int baudrate = 9600;
         private DataHolder datah;
         private const int WINDOW_SIZE = 10;
+        OxyPlot.WindowsForms.PlotView plot1;
 
         delegate void SetTextCallback(string text);
 
@@ -32,6 +36,24 @@ namespace Sound_Meter_1._0._0
             btnStart.Enabled = false;
             btnFreeze.Enabled = false;
             datah = new DataHolder(WINDOW_SIZE);
+
+            // Add oxyplot components
+            plot1 = new OxyPlot.WindowsForms.PlotView();
+            this.SuspendLayout();
+            // 
+            // plot1
+            // 
+            plot1.Dock = System.Windows.Forms.DockStyle.Fill;
+            plot1.Name = "plot1";
+            plot1.PanCursor = System.Windows.Forms.Cursors.Hand;
+            plot1.Text = "plot1";
+            plot1.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
+            plot1.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
+            plot1.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            pnlMap.Controls.Add(plot1);
+
+            int[] power = { 20,20,15,15};
+            draw_soundmap(power);
         }
 
         private void set_com_port(string port, int baudrate)
@@ -104,6 +126,28 @@ namespace Sound_Meter_1._0._0
                               "CH2: " + e.GetCH2 + ", " +
                               "CH3: " + e.GetCH3;
             status_update(status);
+        }
+
+        public void draw_soundmap(int[] power, int n=1000)
+        {
+            double[,] data = Calculations.calculate_map(power, n);
+            var heatMapSeries = new HeatMapSeries
+            {
+                X0 = 0,
+                X1 = n - 1,
+                Y0 = 0,
+                Y1 = n - 1,
+                Interpolate = true,
+                RenderMethod = HeatMapRenderMethod.Bitmap,
+                Data = data
+            };
+            var model = new PlotModel { Title = "Sound Map" };
+            model.Axes.Add(new LinearColorAxis
+            {
+                Palette = OxyPalettes.Rainbow(100)
+            });
+            model.Series.Add(heatMapSeries);
+            plot1.Model = model;
         }
 
         private void timer1_Tick(object sender, EventArgs e)

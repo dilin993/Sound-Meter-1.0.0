@@ -9,7 +9,7 @@ namespace Sound_Meter_1._0._0
     class MatrixHelper
     {
 
-        public static bool isCompatible(int[,] M1, int[,] M2)
+        public static bool isCompatible(double[,] M1, double[,] M2)
         {
             if (M1.Rank != M2.Rank)
                 return false;
@@ -21,11 +21,11 @@ namespace Sound_Meter_1._0._0
             return true;
         }
 
-        public static int [,] add(int[,] M1, int[,] M2)
+        public static double [,] add(double[,] M1, double[,] M2)
         {
             if (!isCompatible(M1, M2))
                 return null;
-            int[,] ans = new int[M1.GetLength(0), M1.GetLength(1)];
+            double[,] ans = new double[M1.GetLength(0), M1.GetLength(1)];
             for(int i=0;i<M1.GetLength(0);i++)
             {
                 for(int j=0;j<M2.GetLength(1);j++)
@@ -36,11 +36,11 @@ namespace Sound_Meter_1._0._0
             return ans;
         }
 
-        public static int[,] substract(int[,] M1, int[,] M2)
+        public static double[,] substract(double[,] M1, double[,] M2)
         {
             if (!isCompatible(M1, M2))
                 return null;
-            int[,] ans = new int[M1.GetLength(0), M1.GetLength(1)];
+            double[,] ans = new double[M1.GetLength(0), M1.GetLength(1)];
             for (int i = 0; i < M1.GetLength(0); i++)
             {
                 for (int j = 0; j < M1.GetLength(1); j++)
@@ -51,9 +51,9 @@ namespace Sound_Meter_1._0._0
             return ans;
         }
 
-        public static int[,] abs(int[,] M1)
+        public static double[,] abs(double[,] M1)
         {
-            int[,] ans = new int[M1.GetLength(0), M1.GetLength(1)];
+            double[,] ans = new double[M1.GetLength(0), M1.GetLength(1)];
             for (int i = 0; i < M1.GetLength(0); i++)
             {
                 for (int j = 0; j < M1.GetLength(1); j++)
@@ -64,9 +64,9 @@ namespace Sound_Meter_1._0._0
             return ans;
         }
 
-        public static int[,] threshold(int[,] M1, int th=0)
+        public static double[,] threshold(double[,] M1, double th=0)
         {
-            int[,] ans = new int[M1.GetLength(0), M1.GetLength(1)];
+            double[,] ans = new double[M1.GetLength(0), M1.GetLength(1)];
             for (int i = 0; i < M1.GetLength(0); i++)
             {
                 for (int j = 0; j < M1.GetLength(1); j++)
@@ -80,9 +80,9 @@ namespace Sound_Meter_1._0._0
             return ans;
         }
 
-        public static int[,] init_mat(int m, int n, int val)
+        public static double[,] init_mat(int m, int n, double val)
         {
-            int[,] ans = new int[m, n];
+            double[,] ans = new double[m, n];
             for (int i = 0; i < m; i++)
             {
                 for (int j = 0; j < n; j++)
@@ -93,27 +93,27 @@ namespace Sound_Meter_1._0._0
             return ans;
         }
 
-        public static int[,] zeros(int m,int n)
+        public static double[,] zeros(int m,int n)
         {
             return init_mat(m, n, 0);
         }
 
-        public static int[,] div(int[,] M1, double d)
+        public static double[,] div(double[,] M1, double d)
         {
-            int[,] ans = new int[M1.GetLength(0), M1.GetLength(1)];
+            double[,] ans = new double[M1.GetLength(0), M1.GetLength(1)];
             for (int i = 0; i < M1.GetLength(0); i++)
             {
                 for (int j = 0; j < M1.GetLength(1); j++)
                 {
-                    ans[i, j] = (int)Math.Round(M1[i, j] / d);
+                    ans[i, j] = M1[i, j] / d;
                 }
             }
             return ans;
         }
 
-        public static int[] min(int[,] M1)
+        public static double[] min(double[,] M1)
         {
-            int[] curMin = { int.MaxValue, 0, 0 };
+            double[] curMin = { double.MaxValue, 0, 0 };
             for (int i = 0; i < M1.GetLength(0); i++)
             {
                 for (int j = 0; j < M1.GetLength(1); j++)
@@ -129,9 +129,9 @@ namespace Sound_Meter_1._0._0
             return curMin;
         }
 
-        public static int[] max(int[,] M1)
+        public static double[] max(double[,] M1)
         {
-            int[] curMax = { int.MinValue, 0, 0 };
+            double[] curMax = { double.MinValue, 0, 0 };
             for (int i = 0; i < M1.GetLength(0); i++)
             {
                 for (int j = 0; j < M1.GetLength(1); j++)

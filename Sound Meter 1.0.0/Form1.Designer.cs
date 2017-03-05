@@ -30,8 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.picMap = new System.Windows.Forms.PictureBox();
-            this.picFFT = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtStatus = new System.Windows.Forms.TextBox();
@@ -40,27 +38,9 @@
             this.btnFreeze = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picFFT)).BeginInit();
+            this.pnlMap = new System.Windows.Forms.Panel();
+            this.pnlFFT = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
-            // picMap
-            // 
-            this.picMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picMap.Location = new System.Drawing.Point(12, 58);
-            this.picMap.Name = "picMap";
-            this.picMap.Size = new System.Drawing.Size(500, 500);
-            this.picMap.TabIndex = 0;
-            this.picMap.TabStop = false;
-            // 
-            // picFFT
-            // 
-            this.picFFT.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picFFT.Location = new System.Drawing.Point(518, 58);
-            this.picFFT.Name = "picFFT";
-            this.picFFT.Size = new System.Drawing.Size(500, 250);
-            this.picFFT.TabIndex = 1;
-            this.picFFT.TabStop = false;
             // 
             // label1
             // 
@@ -146,11 +126,29 @@
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // pnlMap
+            // 
+            this.pnlMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMap.Location = new System.Drawing.Point(15, 58);
+            this.pnlMap.Name = "pnlMap";
+            this.pnlMap.Size = new System.Drawing.Size(500, 500);
+            this.pnlMap.TabIndex = 9;
+            // 
+            // pnlFFT
+            // 
+            this.pnlFFT.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlFFT.Location = new System.Drawing.Point(521, 58);
+            this.pnlFFT.Name = "pnlFFT";
+            this.pnlFFT.Size = new System.Drawing.Size(500, 250);
+            this.pnlFFT.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1026, 570);
+            this.Controls.Add(this.pnlFFT);
+            this.Controls.Add(this.pnlMap);
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.btnFreeze);
             this.Controls.Add(this.btnStart);
@@ -158,8 +156,6 @@
             this.Controls.Add(this.txtStatus);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.picFFT);
-            this.Controls.Add(this.picMap);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -167,17 +163,12 @@
             this.Name = "Form1";
             this.Text = "Sound Meter 1.0";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.picMap)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picFFT)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox picMap;
-        private System.Windows.Forms.PictureBox picFFT;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtStatus;
@@ -186,6 +177,8 @@
         private System.Windows.Forms.Button btnFreeze;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Panel pnlMap;
+        private System.Windows.Forms.Panel pnlFFT;
     }
 }
 
