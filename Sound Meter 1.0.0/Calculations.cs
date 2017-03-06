@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+ 
 
 namespace Sound_Meter_1._0._0
 {
     class Calculations
     {
-        public static double[,] calculate_map(int[] power, int n)
+        public static double[,] calculate_map(double[] power, int n)
         {
             double[,] M0 = MatrixHelper.zeros(n, n);
             double[,] M1 = MatrixHelper.zeros(n, n);
@@ -58,6 +59,44 @@ namespace Sound_Meter_1._0._0
                 }
             }
             return Map;
+        }
+
+        public static double[] calculate_fft(int[] x)
+        {
+            alglib.complex[] f;
+            var d = x.Select(y => (double)y).ToArray();
+            alglib.fftr1d(d, out f);
+            double[] fft = new double[f.Length];
+            for(int i=0;i<f.Length;i++)
+            {
+                fft[i] = Math.Sqrt(Math.Pow(f[i].x, 2) + (Math.Pow(f[i].y, 2)));
+            }
+            return fft;
+        }
+
+        public static int max_idx(double[] x)
+        {
+            double m = double.MinValue;
+            int idx = 0;
+            for(int i=0;i<x.Length;i++)
+            {
+                if(m<x[i])
+                {
+                    m = x[i];
+                    idx = i;
+                }
+            }
+            return idx;
+        }
+
+        public static double[] calculate_peak_power(double[] fft1, double[] fft2, double[] fft3, double[] fft4)
+        {
+            int[] maxI = { max_idx(fft1), max_idx(fft2), max_idx(fft3), max_idx(fft4) };
+            double[] max = { fft1[maxI[0]], fft2[maxI[1]], fft3[maxI[2]], fft4[maxI[3]] };
+            int maxJ = max_idx(max);
+            int i = maxI[maxJ];
+            double[] ans = { fft1[i], fft2[i], fft3[i], fft4[i] };
+            return ans;
         }
     }
 }

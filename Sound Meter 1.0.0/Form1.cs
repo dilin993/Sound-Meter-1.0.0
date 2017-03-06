@@ -52,8 +52,8 @@ namespace Sound_Meter_1._0._0
             plot1.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
             pnlMap.Controls.Add(plot1);
 
-            int[] power = { 20,20,15,15};
-            draw_soundmap(power);
+            //double[] power = { 20,20,15,15};
+            //draw_soundmap(power);
         }
 
         private void set_com_port(string port, int baudrate)
@@ -128,7 +128,7 @@ namespace Sound_Meter_1._0._0
             status_update(status);
         }
 
-        public void draw_soundmap(int[] power, int n=1000)
+        public void draw_soundmap(double[] power, int n=1000)
         {
             double[,] data = Calculations.calculate_map(power, n);
             var heatMapSeries = new HeatMapSeries
@@ -153,14 +153,21 @@ namespace Sound_Meter_1._0._0
         private void timer1_Tick(object sender, EventArgs e)
         {
             int[] datach0 = datah.read_ch0();
-            if(datach0!=null)
+            int[] datach1 = datah.read_ch1();
+            int[] datach2 = datah.read_ch2();
+            int[] datach3 = datah.read_ch3();
+            if (datach0!=null && datach1 != null && datach2 != null && datach3 != null)
             {
-                string tmp = "";
-                for (int i = 0; i < WINDOW_SIZE; i++)
-                {
-                    tmp += datach0[i].ToString() + " ";
-                }
-                status_update("Block: " + tmp);
+                // calculate fft
+                double[] fft1 = Calculations.calculate_fft(datach0);
+                double[] fft2 = Calculations.calculate_fft(datach1);
+                double[] fft3 = Calculations.calculate_fft(datach2);
+                double[] fft4 = Calculations.calculate_fft(datach3);
+
+                double[] power = Calculations.calculate_peak_power(fft1, fft2, fft3, fft4);
+
+                status_update("power: " + power[0] + " , " + power[1] + " , " + power[2] + " , " + power[3]);
+                draw_soundmap(power);
             }
         }
     }
