@@ -12,9 +12,9 @@ namespace Sound_Meter_1._0._0
 
     public class CommunicationHandlerEventArgs : EventArgs
     {
-        private int[] datach = { 0, 0, 0, 0 };
+        private Int16[] datach = { 0, 0, 0, 0 };
 
-        public CommunicationHandlerEventArgs(int[] datach)
+        public CommunicationHandlerEventArgs(Int16[] datach)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -22,27 +22,27 @@ namespace Sound_Meter_1._0._0
             }
         }
 
-        public int GetCH0
+        public Int16 GetCH0
         {
             get { return datach[0]; }
         }
 
-        public int GetCH1
+        public Int16 GetCH1
         {
             get { return datach[1]; }
         }
 
-        public int GetCH2
+        public Int16 GetCH2
         {
             get { return datach[2]; }
         }
 
-        public int GetCH3
+        public Int16 GetCH3
         {
             get { return datach[3]; }
         }
 
-        public int[] GetChannels
+        public Int16[] GetChannels
         {
             get { return datach; }
         }
@@ -53,7 +53,7 @@ namespace Sound_Meter_1._0._0
         public event BlockReceivedEventHandler received;
         static SerialPort serialPort;
         static PacketTypes nextPacket = PacketTypes.CH0L;
-        static int[] datach = { 0, 0, 0, 0 };
+        static Int16[] datach = { 0, 0, 0, 0 };
         private string port;
         private int baudrate;
 
@@ -114,13 +114,13 @@ namespace Sound_Meter_1._0._0
                         object sender,
                         SerialDataReceivedEventArgs e)
         {
-            int raw, data;
+            Int16 raw, data;
             PacketTypes code;
             SerialPort sp = (SerialPort)sender;
             while (sp.BytesToRead > 0)
             {
-                raw = sp.ReadByte();
-                data = raw & 31;
+                raw = (Int16)sp.ReadByte();
+                data = (Int16)(raw & 31);
                 code = (PacketTypes)((raw & 224) >> 5);
 
                 switch (nextPacket)
@@ -136,7 +136,7 @@ namespace Sound_Meter_1._0._0
                     case PacketTypes.CH0H:
                         if (code == PacketTypes.CH0H)
                         {
-                            datach[0] += (data << 5);
+                            datach[0] += (Int16)(data << 5);
                             nextPacket = PacketTypes.CH1L;
                         }
                         else
@@ -156,7 +156,7 @@ namespace Sound_Meter_1._0._0
                     case PacketTypes.CH1H:
                         if (code == PacketTypes.CH1H)
                         {
-                            datach[1] += (data << 5);
+                            datach[1] += (Int16)(data << 5);
                             nextPacket = PacketTypes.CH2L;
                         }
                         else
@@ -176,7 +176,7 @@ namespace Sound_Meter_1._0._0
                     case PacketTypes.CH2H:
                         if (code == PacketTypes.CH2H)
                         {
-                            datach[2] += (data << 5);
+                            datach[2] += (Int16)(data << 5);
                             nextPacket = PacketTypes.CH3L;
                         }
                         else
@@ -196,7 +196,7 @@ namespace Sound_Meter_1._0._0
                     case PacketTypes.CH3H:
                         if (code == PacketTypes.CH3H)
                         {
-                            datach[3] += (data << 5);
+                            datach[3] += (Int16)(data << 5);
                             OnReceived(new CommunicationHandlerEventArgs(datach));
                         }
                         nextPacket = PacketTypes.CH0L;

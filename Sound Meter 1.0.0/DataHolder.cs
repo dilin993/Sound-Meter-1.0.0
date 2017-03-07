@@ -8,10 +8,10 @@ namespace Sound_Meter_1._0._0
 {
     class DataHolder
     {
-        Queue<int> data_ch0;
-        Queue<int> data_ch1;
-        Queue<int> data_ch2;
-        Queue<int> data_ch3;
+        Queue<Int16> data_ch0;
+        Queue<Int16> data_ch1;
+        Queue<Int16> data_ch2;
+        Queue<Int16> data_ch3;
 
         int windowSize = 300;
         const int percentOverhead = 10;
@@ -36,13 +36,13 @@ namespace Sound_Meter_1._0._0
         {
             this.windowSize = windowSize;
             int capacity = WindowsSize + Overhead;
-            data_ch0 = new Queue<int>(capacity);
-            data_ch1 = new Queue<int>(capacity);
-            data_ch2 = new Queue<int>(capacity);
-            data_ch3 = new Queue<int>(capacity);
+            data_ch0 = new Queue<Int16>(capacity);
+            data_ch1 = new Queue<Int16>(capacity);
+            data_ch2 = new Queue<Int16>(capacity);
+            data_ch3 = new Queue<Int16>(capacity);
         }
         
-        public void enqueue(int[] data)
+        public void enqueue(Int16[] data)
         {
             lock (this)
             {
@@ -58,11 +58,11 @@ namespace Sound_Meter_1._0._0
             return data_ch0.Count >= WindowsSize;
         }
 
-        private int[] read_top(Queue<int> q)
+        private Int16[] read_top(Queue<Int16> q)
         {
             if(q.Count>=WindowsSize)
             {
-                int[] top =  q.Take(WindowsSize).ToArray();
+                Int16[] top =  q.Take(WindowsSize).ToArray();
                 // discard non overlap data out of queue
                 int discardCount = WindowsSize - Overlap;
                 for(int i=0;i<discardCount;i++)
@@ -74,7 +74,7 @@ namespace Sound_Meter_1._0._0
             return null;
         }
 
-        public int[] read_ch0()
+        public Int16[] read_ch0()
         {
             lock(this)
             {
@@ -82,7 +82,7 @@ namespace Sound_Meter_1._0._0
             }
         }
 
-        public int[] read_ch1()
+        public Int16[] read_ch1()
         {
             lock (this)
             {
@@ -90,7 +90,7 @@ namespace Sound_Meter_1._0._0
             }
         }
 
-        public int[] read_ch2()
+        public Int16[] read_ch2()
         {
             lock (this)
             {
@@ -98,7 +98,7 @@ namespace Sound_Meter_1._0._0
             }
         }
 
-        public int[] read_ch3()
+        public Int16[] read_ch3()
         {
             lock (this)
             {

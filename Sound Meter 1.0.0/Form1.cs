@@ -20,7 +20,7 @@ namespace Sound_Meter_1._0._0
         private string port = "COM8";
         private int baudrate = 9600;
         private DataHolder datah;
-        private const int WINDOW_SIZE = 10;
+        private const int WINDOW_SIZE = 40;
         OxyPlot.WindowsForms.PlotView plot1;
 
         delegate void SetTextCallback(string text);
@@ -52,8 +52,8 @@ namespace Sound_Meter_1._0._0
             plot1.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
             pnlMap.Controls.Add(plot1);
 
-            //double[] power = { 20,20,15,15};
-            //draw_soundmap(power);
+            Int16[] power = { 20,20,15,15};
+            draw_soundmap(power);
         }
 
         private void set_com_port(string port, int baudrate)
@@ -121,16 +121,16 @@ namespace Sound_Meter_1._0._0
         private void OnDataCollected(object sender, CommunicationHandlerEventArgs e)
         {
             datah.enqueue(e.GetChannels);
-            string status = "CH0: " + e.GetCH0 + ", " +
-                              "CH1: " + e.GetCH1 + ", " +
-                              "CH2: " + e.GetCH2 + ", " +
-                              "CH3: " + e.GetCH3;
-            status_update(status);
+            //string status = "CH0: " + e.GetCH0 + ", " +
+            //                  "CH1: " + e.GetCH1 + ", " +
+            //                  "CH2: " + e.GetCH2 + ", " +
+            //                  "CH3: " + e.GetCH3;
+            //status_update(status);
         }
 
-        public void draw_soundmap(double[] power, int n=1000)
+        public void draw_soundmap(Int16[] power, int n=1000)
         {
-            double[,] data = Calculations.calculate_map(power, n);
+            double[,] data = Calculations.getDouble(Calculations.calculate_map(power, n));
             var heatMapSeries = new HeatMapSeries
             {
                 X0 = 0,
@@ -152,19 +152,20 @@ namespace Sound_Meter_1._0._0
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            int[] datach0 = datah.read_ch0();
-            int[] datach1 = datah.read_ch1();
-            int[] datach2 = datah.read_ch2();
-            int[] datach3 = datah.read_ch3();
+            Int16[] datach0 = datah.read_ch0();
+            Int16[] datach1 = datah.read_ch1();
+            Int16[] datach2 = datah.read_ch2();
+            Int16[] datach3 = datah.read_ch3();
             if (datach0!=null && datach1 != null && datach2 != null && datach3 != null)
             {
                 // calculate fft
-                double[] fft1 = Calculations.calculate_fft(datach0);
-                double[] fft2 = Calculations.calculate_fft(datach1);
-                double[] fft3 = Calculations.calculate_fft(datach2);
-                double[] fft4 = Calculations.calculate_fft(datach3);
+                //double[] fft1 = Calculations.calculate_fft(datach0);
+                //double[] fft2 = Calculations.calculate_fft(datach1);
+                //double[] fft3 = Calculations.calculate_fft(datach2);
+                //double[] fft4 = Calculations.calculate_fft(datach3);
 
-                double[] power = Calculations.calculate_peak_power(fft1, fft2, fft3, fft4);
+                //Int16[] power = Calculations.calculate_peak_power(fft1, fft2, fft3, fft4);
+                Int16[] power = { (Int16)datach0.Average(x => x), (Int16)datach1.Average(x => x), (Int16)datach2.Average(x => x), (Int16)datach3.Average(x => x) };
 
                 status_update("power: " + power[0] + " , " + power[1] + " , " + power[2] + " , " + power[3]);
                 draw_soundmap(power);
