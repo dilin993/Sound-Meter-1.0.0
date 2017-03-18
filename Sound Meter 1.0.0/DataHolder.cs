@@ -15,7 +15,7 @@ namespace Sound_Meter_1._0._0
 
         int windowSize = 300;
         const int percentOverhead = 10;
-        const int percentOverlap = 50;
+        const int percentOverlap = 0;
 
         public int WindowsSize
         {

@@ -26,10 +26,10 @@ namespace Sound_Meter_1._0._0
                     r = Math.Sqrt(Math.Pow(1.0 * i / n, 2) 
                         + Math.Pow(1.0 * j / n, 2));
                     r =  Math.Pow(1.0 + r, 2); // (1+r)^2
-                    M0[i, j] = (Int16)Math.Round(r * power[0]);
-                    M1[n-1-i, j] = (Int16)Math.Round(r * power[1]);
-                    M2[i, n-1-j] = (Int16)Math.Round(r * power[2]);
-                    M3[n-1-i, n-1-j] = (Int16)Math.Round(r * power[3]);
+                    M0[i, j] = (Int16)Math.Round(r * power[0]/25.0);
+                    M1[n-1-i, j] = (Int16)Math.Round(r * power[1]/25.0);
+                    M2[i, n-1-j] = (Int16)Math.Round(r * power[2]/25.0);
+                    M3[n-1-i, n-1-j] = (Int16)Math.Round(r * power[3]/25.0);
                 }
             }
 

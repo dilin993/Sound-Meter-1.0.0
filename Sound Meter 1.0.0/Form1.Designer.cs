@@ -40,6 +40,9 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pnlMap = new System.Windows.Forms.Panel();
             this.pnlFFT = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pnlMap.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -129,6 +132,7 @@
             // pnlMap
             // 
             this.pnlMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMap.Controls.Add(this.pictureBox1);
             this.pnlMap.Location = new System.Drawing.Point(15, 58);
             this.pnlMap.Name = "pnlMap";
             this.pnlMap.Size = new System.Drawing.Size(500, 500);
@@ -141,6 +145,15 @@
             this.pnlFFT.Name = "pnlFFT";
             this.pnlFFT.Size = new System.Drawing.Size(500, 250);
             this.pnlFFT.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(-4, -1);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(503, 500);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 10;
+            this.pictureBox1.TabStop = false;
             // 
             // Form1
             // 
@@ -163,6 +176,8 @@
             this.Name = "Form1";
             this.Text = "Sound Meter 1.0";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.pnlMap.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -179,6 +194,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Panel pnlMap;
         private System.Windows.Forms.Panel pnlFFT;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
