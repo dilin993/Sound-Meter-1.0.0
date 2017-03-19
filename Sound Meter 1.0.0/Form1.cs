@@ -55,6 +55,17 @@ namespace Sound_Meter_1._0._0
 
             //Int16[] power = { 20,20,15,15};
             //draw_soundmap(power);
+            Int16 p1 = 500;
+            Int16 p2 = 500;
+            Int16 p3 = 500;
+            Int16 p4 = 500;
+            string status = "CH0: " + p1 + ", " +
+                             "CH1: " + p2 + ", " +
+                             "CH2: " + p3 + ", " +
+                             "CH3: " + p4;
+            status_update(status);
+            Int16[] power = {p1, p2, p3, p4 };
+            draw_soundmap(power);
         }
 
         private void set_com_port(string port, int baudrate)
